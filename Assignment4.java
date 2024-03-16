@@ -207,5 +207,149 @@ public class Assignment4 {
             }
         }
 
+        class Solution14 {
+            public int oddCells(int m, int n, int[][] indices) {
+                int ans[][]= new int[m][n];
+                for(int i =0;i<indices.length;i++){
+                    int rowidx = indices[i][0];
+                    int colidx = indices[i][1];
+                    for(int j=0;j<n;j++){
+                        ans[rowidx][j] +=1;
+                    }
+                    for(int j=0;j<m;j++){
+                        ans[j][colidx] +=1;
+                    }
+                }
+                int count = 0;
+                for(int i=0;i<m;i++)
+                    for(int j=0;j<n;j++)
+                    {
+                        if(ans[i][j] % 2!= 0){
+                            count++;
+                        }
+                    }
+                return count;
+            }
+        }
+
+        class Solution15 {
+            public int diagonalSum(int[][] mat) {
+                int sum =0;
+                for(int i =0;i < mat.length; i++) {
+                    for(int j = 0; j < mat[i].length; j++ ) {
+                        if(i==j || i+j==mat.length-1)
+                            sum+=mat[i][j];
+                    }
+                }
+                return sum;
+            }
+        }
+
+        class Solution16 {
+            public int findNumbers(int[] nums) {
+                int ans =0;
+                for(int i =0;i<nums.length;i++){
+                    int count=0;
+                    while(nums[i]!=0){
+                        nums[i]=nums[i]/10;
+                        ++count;
+                    }
+                    if(count%2==0){
+                        ++ans;
+                    }
+                }
+                return ans;
+            }
+        }
+
+        class Solution17 {
+            public int[][] transpose(int[][] matrix) {
+                int[][] temp=new int[matrix[0].length][matrix.length];
+                for(int i=0;i<matrix.length;i++){
+                    for(int j =0;j<matrix[0].length;j++){
+                        temp[j][i]=matrix[i][j];
+                    }
+                }
+                return temp;
+            }
+        }
+
+        class Solution18 {
+            public List<Integer> addToArrayForm(int[] num, int k) {
+                List<Integer> l1 = new ArrayList<>();
+                List<Integer> l2 = new ArrayList<>();
+                while(k>0){
+                    l2.add(0,k%10);
+                    k/=10;
+                }
+                int ind1 = num.length - 1;
+                int ind2 = l2.size() - 1;
+                int carry = 0;
+                while(ind1>=0 && ind2>=0){
+                    int sum = num[ind1] + l2.get(ind2) + carry;
+                    ind1 = ind1-1;
+                    ind2 = ind2-1;
+                    if(sum>9){
+                        l1.add(0,sum%10);
+                        carry = sum/10;
+                    }
+                    else{
+                        l1.add(0,sum);
+                        carry = 0;
+                    }
+                }
+                while(ind1>=0){
+                    int sum = num[ind1--] + carry;
+                    if(sum>9){
+                        l1.add(0,sum%10);
+                        carry = sum/10;
+                    }
+                    else{
+                        l1.add(0,sum);
+                        carry = 0;
+                    }
+                }
+                while(ind2>=0){
+
+                    int sum = l2.get(ind2--) + carry;
+                    if(sum>9){
+                        l1.add(0,sum%10);
+                        carry = sum/10;
+                    }
+                    else{
+                        l1.add(0,sum);
+                        carry = 0;
+                    }
+                }
+                if(carry>0){
+                    l1.add(0,carry);
+                }
+
+                return l1;
+
+            }
+        }
+
+        class Solution19 {
+            public int maximumPopulation(int[][] logs) {
+                int[] population=new int[101];
+                for(int i=0;i<logs.length;i++){
+                    int x=logs[i][0]-1950;
+                    int y=logs[i][1]-1950;
+                    for(int a=x;a<y;a++){
+                        population[a]++;
+                    }
+                }
+                int populationcount=0,maxyear=0;
+                for(int i=0;i<101;i++){
+                    if(population[i]>populationcount){
+                        populationcount=population[i];
+                        maxyear=i+1950;
+                    }
+                }
+                return maxyear;
+            }
+        }
+
     }
 }
