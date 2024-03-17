@@ -351,5 +351,216 @@ public class Assignment4 {
             }
         }
 
+        class Solution20 {
+            public boolean findRotation(int[][] mat, int[][] target) {
+                for(int i = 0; i < 4; i++){
+                    if(Arrays.deepEquals(mat,target)) return true;
+                    matrix_90D(mat);
+                }
+                return false;
+            }
+
+
+            public static void matrix_90D(int[][] matrix){
+                int n = matrix.length;
+                for(int i = 0 ; i < n-1 ; i++){
+                    for(int j = i+1 ; j < n ; j++){
+                        int temp = matrix[i][j];
+                        matrix[i][j] = matrix[j][i];
+                        matrix[j][i] = temp;
+                    }
+                }
+
+                for(int i = 0 ; i < n ; i++){
+                    for(int j = 0 ; j < n/2 ; j++){
+                        int temp = matrix[i][j];
+                        matrix[i][j] = matrix[i][n-1-j];
+                        matrix[i][n-1-j] = temp;
+                    }
+                }
+            }
+        }
+
+        class Solution21 {
+            public int[] twoSum(int[] nums, int target) {
+                int n = nums.length;
+                for (int i = 0; i < n - 1; i++) {
+                    for (int j = i + 1; j < n; j++) {
+                        if (nums[i] + nums[j] == target) {
+                            return new int[]{i, j};
+                        }
+                    }
+                }
+                return new int[]{};
+            }
+        }
+
+        class Solution22 {
+            public int[] sumZero(int n) {
+                int arr[] = new int[n];
+                int d=-(n/2);
+                if(n%2!=0)
+                {
+                    for(int i=0;i<n;i++)
+                    {
+                        arr[i]=d;
+                        d=d+1;
+                    }
+                }
+                else
+                {
+                    for(int i=0;i<n;i++)
+                    {
+                        if(d==0)
+                            d=d+1;
+
+                        arr[i]=d;
+                        d+=1;
+
+                    }
+                }
+
+                return arr;
+            }
+        }
+
+        class Solution23 {
+            public List<Integer> luckyNumbers (int[][] matrix) {
+                ArrayList<Integer> s1 = new ArrayList<>();
+
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[i].length; j++) {
+                        if (checkLucky(matrix, i, j)) {
+                            s1.add(matrix[i][j]);
+                        }
+                    }
+                }
+                return s1;
+            }
+
+            public boolean checkLucky(int[][] matrix, int row, int col) {
+                int element = matrix[row][col];
+
+                // Check if element is the smallest in its row
+                for (int j = 0; j < matrix[row].length; j++) {
+                    if (matrix[row][j] < element && j != col) {
+                        return false;
+                    }
+                }
+
+                // Check if element is the largest in its column
+                for (int i = 0; i < matrix.length; i++) {
+                    if (matrix[i][col] > element && i != row) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        class Solution24 {
+            public List<Integer> luckyNumbers (int[][] matrix) {
+                ArrayList<Integer> s1 = new ArrayList<>();
+
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[i].length; j++) {
+                        if (checkLucky(matrix, i, j)) {
+                            s1.add(matrix[i][j]);
+                        }
+                    }
+                }
+                return s1;
+            }
+
+            public boolean checkLucky(int[][] matrix, int row, int col) {
+                int element = matrix[row][col];
+
+                // Check if element is the smallest in its row
+                for (int j = 0; j < matrix[row].length; j++) {
+                    if (matrix[row][j] < element && j != col) {
+                        return false;
+                    }
+                }
+
+                // Check if element is the largest in its column
+                for (int i = 0; i < matrix.length; i++) {
+                    if (matrix[i][col] > element && i != row) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        class Solution25 {
+            public int[][] matrixReshape(int[][] mat, int r, int c) {
+                int[][] s = new int[r][c];
+                int x = 0;
+                int y = 0;
+                if(mat.length * mat[0].length == r * c){
+                    for(int i =0; i<mat.length; i++){
+                        for(int j = 0; j<mat[0].length; j++){
+                            if(y==c){
+                                x++;
+                                y = 0;
+                            }
+                            s[x][y] = mat[i][j];
+                            y++;
+                        }
+                    }
+                    return s;
+                }
+                return mat;
+            }
+        }
+
+        class Solution26 {
+            public int[] plusOne(int[] digits) {
+                for (int i = digits.length - 1; i >= 0; i--) {
+                    if (digits[i] < 9) {
+                        digits[i]++;
+                        return digits;
+                    }
+                    digits[i] = 0;
+                }
+
+                digits = new int[digits.length + 1];
+                digits[0] = 1;
+                return digits;
+            }
+        }
+
+        class Solution27 {
+            public int removeDuplicates(int[] nums) {
+                int j = 1;
+                for (int i = 1; i < nums.length; i++) {
+                    if (nums[i] != nums[i - 1]) {
+                        nums[j] = nums[i];
+                        j++;
+                    }
+                }
+                return j;
+            }
+        }
+
+        class Solution28 {
+            public int minCostToMoveChips(int[] position) {
+                int even = 0;
+                int odd = 0;
+
+                for(int chips : position) {
+                    if(chips % 2 == 0) {
+                        even++;
+                    }
+                    else {
+                        odd++;
+                    }
+                }
+                return Math.min(even, odd);
+            }
+        }
+
     }
 }
