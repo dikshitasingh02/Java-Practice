@@ -562,5 +562,238 @@ public class Assignment4 {
             }
         }
 
+        // Medium
+
+        class Solution1 {
+            public List<Integer> spiralOrder(int[][] matrix) {
+                List<Integer> res = new ArrayList<>();
+                int n = matrix.length, m = matrix[0].length;
+                int left = 0, up = 0, right = m - 1, down = n - 1;
+
+                while(res.size() < n * m){
+                    for(int i = left; i <= right && res.size() < n * m; i++) res.add(matrix[up][i]);
+                    for(int i = up + 1; i < down && res.size() < n * m; i++) res.add(matrix[i][right]);
+                    for(int i = right; i >= left && res.size() < n * m; i--) res.add(matrix[down][i]);
+                    for(int i = down - 1; i > up && res.size() < n * m; i--) res.add(matrix[i][left]);
+
+                    left++; right--; up++; down--;
+                }
+
+                return res;
+            }
+        }
+
+        class Solution2 {
+            public int[][] generateMatrix(int n) {
+                int rowSt = 0, rowEnd = n - 1, colSt = 0, colEnd = n - 1;
+                int[][] arr =  new int[n][n];
+                int val = 1;
+                while(val <= n * n){
+                    //To fill first row
+                    for(int i = colSt; i <= colEnd; i++){
+                        arr[rowSt][i] = val++;
+                    }
+                    //To fill last col
+                    for(int i = rowSt + 1; i <= rowEnd; i++){
+                        arr[i][colEnd] = val++;
+                    }
+                    //TO fill last row
+                    if(rowEnd != rowSt){
+                        for(int i = colEnd - 1; i >= colSt; i--){
+                            arr[rowEnd][i] = val++;
+                        }
+                    }
+                    //TO fill first col
+                    if(colEnd != colSt){
+                        for(int i = rowEnd - 1; i > rowSt; i--){
+                            arr[i][colSt] = val++;
+                        }
+                    }
+                    rowSt++;
+                    rowEnd--;
+                    colSt++;
+                    colEnd--;
+                }
+                return arr;
+
+            }
+        }
+
+        class Solution3 {
+            public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
+                int[][] res = new int[rows * cols][];
+                int k = 0;
+                res[k++] = new int[]{rStart, cStart};
+                int[] direction = {0, 1, 0, -1, 0};
+                int d = 0;
+                int len = 0;
+                while(k < rows * cols){
+                    if(d == 0 || d == 2){
+                        len++;
+                    }
+                    for(int i = 0; i < len; i++){
+                        rStart += direction[d];
+                        cStart += direction[d+1];
+
+                        if(rStart > -1 && rStart < rows && cStart > -1 && cStart < cols){
+                            res[k++] = new int[]{rStart, cStart};
+                        }
+                    }
+                    d = ++d % 4;
+                }
+                return res;
+            }
+        }
+
+        class Solution4 {
+            public void setZeroes(int[][] matrix) {
+                boolean fr = false,fc = false;
+                for(int i = 0; i < matrix.length; i++) {
+                    for(int j = 0; j < matrix[0].length; j++) {
+                        if(matrix[i][j] == 0) {
+                            if(i == 0) fr = true;
+                            if(j == 0) fc = true;
+                            matrix[0][j] = 0;
+                            matrix[i][0] = 0;
+                        }
+                    }
+                }
+                for(int i = 1; i < matrix.length; i++) {
+                    for(int j = 1; j < matrix[0].length; j++) {
+                        if(matrix[i][0] == 0 || matrix[0][j] == 0) {
+                            matrix[i][j] = 0;
+                        }}
+                }
+                if(fr) {
+                    for(int j = 0; j < matrix[0].length; j++) {
+                        matrix[0][j] = 0;
+                    }
+                }
+                if(fc) {
+                    for(int i = 0; i < matrix.length; i++) {
+                        matrix[i][0] = 0;
+                    }
+                }
+            }
+        }
+
+        class Solution5 {
+            public int[] productExceptSelf(int[] nums) {
+                int n = nums.length;
+                int[] ans = new int[n];
+                Arrays.fill(ans, 0);
+                int product = 1;
+                int zeros = 0;
+
+                for (int num : nums) {
+                    if (num == 0) {
+                        zeros++;
+                        continue;
+                    }
+                    product *= num;
+                }
+
+                if (zeros == 1) {
+                    for (int i = 0; i < n; i++) {
+                        ans[i] = nums[i] == 0 ? product : 0;
+                    }
+                } else if (zeros == 0) {
+                    for (int i = 0; i < n; i++) {
+                        ans[i] = product / nums[i];
+                    }
+                }
+
+                return ans;
+            }
+        }
+
+        class Solution6 {
+            public int[] searchRange(int[] nums, int target) {
+                int first = -1,last = -1;
+                for(int i =0;i<nums.length;i++){
+                    if(nums[i] == target){
+                        if(first == -1){
+                            first = i;
+                        }
+                        last = i;
+                    }
+                }
+                return new int[]{first,last};
+            }
+        }
+
+        class Solution7 {
+            public boolean canJump(int[] nums) {
+                int reachable = 0;
+                for(int i = 0;i<nums.length;i++){
+                    if(i>reachable)return false;
+                    reachable = Math.max(reachable,i+nums[i]);
+                }
+                return true;
+            }
+        }
+
+        class Solution8 {
+            public void rotate(int[] nums, int k) {
+                k = k % nums.length;
+                if(k < 0){
+                    k += nums.length;
+                }
+                reverse(nums, 0, nums.length - k - 1);
+                reverse(nums, nums.length - k, nums.length - 1);
+                reverse(nums, 0, nums.length - 1);
+            }
+            public static void reverse(int nums[], int i, int j){
+                int li = i;
+                int ri = j;
+
+                while(li < ri){
+                    int temp = nums[li];
+                    nums[li] = nums[ri];
+                    nums[ri] = temp;
+
+                    li++;
+                    ri--;
+                }
+            }
+        }
+
+        class Solution9
+        {
+            public void sortColors(int[] nums) {
+                int l = 0;
+                int r = nums.length - 1;
+
+                for (int i = 0; i <= r;)
+                    if (nums[i] == 0)
+                        swap(nums, i++, l++);
+                    else if (nums[i] == 1)
+                        ++i;
+                    else
+                        swap(nums, i, r--);
+            }
+
+            private void swap(int[] nums, int i, int j) {
+                final int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+
+            }
+        }
+
+        class Solution10 {
+            public int rob(int[] nums) {
+                int rob = 0;
+                int norob = 0;
+                for (int i = 0; i < nums.length; i ++) {
+                    int newRob = norob + nums[i];
+                    int newNoRob = Math.max(norob, rob);
+                    rob = newRob;
+                    norob = newNoRob;
+                }
+                return Math.max(rob, norob);
+            }
+        }
+
     }
 }
