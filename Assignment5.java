@@ -107,4 +107,67 @@ public class Assignment5 {
             return false;
         }
     }
+
+    // Question 6
+    class Solution6 {
+        public int arrangeCoins(int n) {
+            long left = 0; // we use "long" because we may get an integer overflow
+            long right = n;
+            while(left <= right){
+                long pivot = left + (right - left) / 2;
+                long coinsUsed = pivot * (pivot + 1)/2;
+                if(coinsUsed == n){
+                    return (int)pivot;
+                }
+                if(n < coinsUsed){
+                    right = pivot-1;
+                }
+                else{
+                    left = pivot + 1;
+                }
+            }
+            return (int)right; // cast as an "int" because it was initiliazed as a "long"
+        }
+    }
+
+    // Question 7
+    class Solution7 {
+        public char nextGreatestLetter(char[] letters, char target) {
+            int start = 0;
+            int end = letters.length - 1;
+
+            while(start <= end) {
+                // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+                int mid = start + (end - start) / 2;
+
+                if (target < letters[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            }
+            return letters[start % letters.length];
+
+        }
+    }
+
+    // Question 8
+    class Solution8 {
+        public int findKthPositive(int[] arr, int k) {
+            int n = arr.length;
+            int low=0; int high = n-1;
+            while(low<=high){
+                int mid = (low+high)/2;
+                int missing = arr[mid] - (mid+1);
+
+                if(missing<k){
+                    low=mid+1;
+                } else{
+                    high= mid-1;
+                }
+            }
+            return high+1+k;
+        }
+    }
 }

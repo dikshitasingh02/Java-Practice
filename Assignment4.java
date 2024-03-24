@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Assignment4 {
-    public static void main(String[] args) {
+
         //Easy Questions
         // Question 1
         class Solution1 {
@@ -795,5 +795,5 @@ public class Assignment4 {
             }
         }
 
-    }
+
 }
