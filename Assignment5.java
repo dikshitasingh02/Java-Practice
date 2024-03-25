@@ -170,4 +170,91 @@ public class Assignment5 {
             return high+1+k;
         }
     }
+
+    // Question 9
+    class Solution9 {
+        public int searchInsert(int[] nums, int target) {
+            int start = 0;
+            int end = nums.length-1;
+
+            while (start <= end) {
+                int mid = start + (end-start)/2;
+                if (nums[mid] == target) return mid;
+                else if (nums[mid] > target) end = mid-1;
+                else start = mid+1;
+            }
+
+            return start;
+        }
+    }
+
+    // Question 10
+    class Solution10 {
+        public int peakIndexInMountainArray(int[] arr) {
+            int start = 0;
+            int end = arr.length - 1;
+
+            while (start < end) {
+                int mid = start + (end - start) / 2;
+                if (arr[mid] > arr[mid+1]) {
+                    // you are in dec part of array
+                    // this may be the ans, but look at left
+                    // this is why end != mid - 1
+                    end = mid;
+                } else {
+                    // you are in asc part of array
+                    start = mid + 1; // because we know that mid+1 element > mid element
+                }
+            }
+            return start;
+        }
+    }
+
+    // Question 11
+    class Solution11 {
+        public int countNegatives(int[][] grid) {
+            int count = 0;
+            for(int i = grid.length - 1; i >= 0; i--) {
+                for(int j = grid[0].length - 1; j >= 0; j--) {
+                    if(grid[i][j] < 0) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            return count;
+        }
+    }
+
+    // Question 12
+    class Solution12 {
+        public int[] intersection(int[] nums1, int[] nums2) {
+            ArrayList<Integer> arr = new ArrayList<>();
+
+            Arrays.sort(nums1);
+            Arrays.sort(nums2);
+            int i = 0, j = 0;
+            while(i<nums1.length && j<nums2.length){
+                if(nums1[i]<nums2[j]){
+                    i++;
+                }else if(nums1[i]>nums2[j]){
+                    j++;
+                }else{
+                    if(!arr.contains(nums1[i])){
+                        arr.add(nums1[i]);
+                    }
+                    i++;j++;
+                }
+            }
+
+            int[] ans = new int[arr.size()];
+            for(int ik=0;ik<ans.length;ik++){
+                ans[ik] = arr.get(ik);
+            }
+            return ans;
+        }
+    }
+
+    
 }
