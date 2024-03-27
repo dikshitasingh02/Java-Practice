@@ -304,47 +304,120 @@ public class Assignment5 {
 
     // Question 14
     class Solution14 {
-        public int[] intersect(int[] nums1, int[] nums2) {
-            if(nums2.length < nums1.length){
-                return intersect(nums2, nums1);
+        public int[] fairCandySwap(int[] aliceSizes, int[] bobSizes) {
+            int aliceTotal=0;
+            int bobTotal=0;
+            for (int aa : aliceSizes) {
+                aliceTotal += aa;
             }
+            for (int bb : bobSizes) {
+                bobTotal += bb;
+            }
+            // Now iterate aliceSize array and then try to find out target so that we can do
+            // binary search.
 
-            Arrays.sort(nums1);
-            Arrays.sort(nums2);
+            for (int i = 0; i < aliceSizes.length; i++) {
+                // here we will use some mathmatics to find mid value;
+                /*
+                 * see as previouse example I explained very well. aliceTotal - aliceSizes[i] +
+                 * bobSizes[j] = bobTotal - bobSizes[j]+aliceSizes[i] aliceTotal = bobTotal +
+                 * aliceSizes[i] + aliceSizes[i] - bobSizes[j]-bobSizes[j] aliceTotal = bobTotal
+                 * + 2 * aliceSizes[i] - 2* bobSizes[j];
+                 *
+                 * 2 bobSizes[j] = bobTotal - aliceTotal + 2 * aliceSizes[i]; bobSizes[j] =
+                 * (bobTotal - aliceTotal + 2 * aliceSizes[i])/2
+                 */
 
-            List<Integer> result = new ArrayList<>();
-            int leftIndex = 0;
-            for(int num: nums1){
-                int index = binarySearch(nums2, num, leftIndex);
-
-                if(index != -1){
-                    result.add(num);
-                    leftIndex = index + 1;
+                /*
+                 * Here in this case we will take bobsize array as target to do binar search.
+                 * Hence we need to first sort bobsArray
+                 */
+                int target = (bobTotal - aliceTotal + 2 * aliceSizes[i]) / 2;
+                if (binarySearch(bobSizes, target)) {
+                    return new int[] { aliceSizes[i], target };
                 }
             }
 
-            return result.stream().mapToInt(Integer::intValue).toArray();
+            return new int[0];
         }
 
-        private int binarySearch(int[] nums, int target, int left){
-            int right = nums.length - 1;
-            int index = -1;
+        public static boolean binarySearch(int[] arr, int target) {
+            int start = 0;
+            int end = arr.length - 1;
+            int mid = start + (end - start) / 2;
+            while (start <= end) {
+                if (target > arr[mid])
+                    start = mid + 1;
+                if (target < arr[mid])
+                    end = mid - 1;
+                else
+                    return true;
+            }
+            return false;
+        }
 
-            while(left <= right){
-                int middle = left + (right - left) / 2;
+    }
 
-                if(nums[middle] == target){
-                    index = middle;
-
-                    right = middle - 1;
-                } else if(nums[middle] > target){
-                    right = middle - 1;
-                } else {
-                    left = middle + 1;
+    // Question 15
+    class Solution15 {
+        public boolean checkIfExist(int[] arr) {
+            for(int i=0;i<arr.length;i++){
+                for(int j=0;j<arr.length;j++){
+                    if((arr[i]==arr[j]*2) && i!=j){
+                        return true;
+                    }
                 }
             }
+            return false;
+        }
+    }
 
-            return index;
+    // Question 16
+    class Solution16 {
+        public int specialArray(int[] nums) {
+            int left = 0;
+            int right = nums.length;
+            int ans = -1;
+            while(left <= right) {
+                int mid = left + (right - left)/2;
+                int count = 0;
+                for(int i: nums) {
+                    if(i >= mid) {
+                        count++;
+                    }
+                }
+                if(count == mid) {
+                    ans = mid;
+                    break;
+                }else if(count > mid) {
+                    left = mid + 1;
+                }else {
+                    right = mid - 1;
+                }
+            }
+            return ans;
+        }
+    }
+
+    // Question 17
+    class Solution17 {
+        public int search(int[] nums, int target) {
+            return binary(nums, target, 0, nums.length-1);
+        }
+        public int binary(int a[], int x, int s, int e){
+            while(s <= e){
+                int m = s + (e-s)/2;
+                if(a[m] == x){
+                    return m;
+                }
+                if(x < a[m]){
+                    e = m-1;
+                }
+                else {
+                    s = m+1;
+                }
+            }
+            return -1;
         }
     }
 }
