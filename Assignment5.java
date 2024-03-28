@@ -420,4 +420,41 @@ public class Assignment5 {
             return -1;
         }
     }
+
+    // Medium Questions of Binary Search
+
+    // Question 1
+    class Solution1 {
+        public int[] searchRange(int[] nums, int target) {
+            int first = -1,last = -1;
+            for(int i =0;i<nums.length;i++){
+                if(nums[i] == target){
+                    if(first == -1){
+                        first = i;
+                    }
+                    last = i;
+                }
+            }
+            return new int[]{first,last};
+        }
+    }
+
+    // Question 2
+    class Solution2 {
+        public int singleNonDuplicate(int[] nums) {
+            int n= nums.length;
+            int l =0;
+            int h= nums.length - 1;
+            while(l<=h){
+                int mid = l + (h-l)/2;
+                if(mid%2==0 && mid+1<n && nums[mid] == nums[mid+1] || mid%2==1 && mid-1>=0 && nums[mid] == nums[mid-1]){
+                    l=mid+1;
+                }
+                else{
+                    h = mid-1;
+                }
+            }
+            return nums[l];
+        }
+    }
 }
