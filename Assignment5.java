@@ -594,4 +594,59 @@ public class Assignment5 {
             return false;
         }
     }
+
+    // Question 5
+    class Solution5 {
+        public int findMin(int[] nums) {
+            int p = findPivot(nums);
+            if(p == -1){ // if array is not rotated
+                return nums[0];
+            }
+            return nums[p+1];
+        }
+        int findPivot(int[] nums){
+            int start = 0;
+            int end = nums.length-1;
+            while(start<= end){
+                int mid = start+(end- start)/2;
+                if(mid<end&&nums[mid] > nums[mid+1]){ // we will one have asingle case
+                    // what if mid is last index then we will get an error "ArrayIndexOutOfBoundsException".
+                    return mid;
+                }
+                if(mid>start&&nums[mid]<nums[mid-1]){
+                    return mid-1;
+                }
+                if(nums[0]> nums[mid]){
+                    end = mid;
+                }
+                else{
+                    start= mid+1;
+                }
+            }
+            return -1; // becaz array is not rotated
+        }
+    }
+
+    // Question 6
+    class Solution6 {
+        public int findPeakElement(int[] nums) {
+            int start = 0;
+            int end = nums.length - 1;
+
+            while (start < end) {
+                int mid = start + (end - start) / 2;
+                if (nums[mid] > nums[mid+1]) {
+                    // you are in dec part of array
+                    // this may be the ans, but look at left
+                    // this is why end != mid - 1
+                    end = mid;
+                } else {
+                    // you are in asc part of array
+                    start = mid + 1; // because we know that mid+1 element > mid element
+                }
+            }
+
+            return start;
+        }
+    }
 }
