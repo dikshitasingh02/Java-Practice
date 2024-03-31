@@ -649,4 +649,57 @@ public class Assignment5 {
             return start;
         }
     }
+
+    // Question 7
+    class Solution {
+        public int[] findRightInterval(int[][] matrix) {
+            int NumberOfRows = matrix.length;
+            int[] rowsFirstElement = new int[ NumberOfRows];
+            // array to store the final answer
+            int[] answer = new int[NumberOfRows];
+            for (int i = 0; i < NumberOfRows ; i++){
+                // adding all the first indices to the array
+                rowsFirstElement[i] = matrix[i][0];
+            }
+            for(int i = 0; i < NumberOfRows; i++){
+                // This method will find the row with equal to or larger value than our target, otherwise return -1
+                answer[i] =  FindGreaterOrEqual( rowsFirstElement,matrix[i][1]);
+            }
+            return answer;
+        }
+        public  int FindGreaterOrEqual(int[] rows, int target){
+            int start = 0;
+            int end = rows.length -1;
+            int answer = -1;
+            while ( start <= end) {
+                int mid = start + (end - start) / 2;
+                if (target == rows[mid]) {
+                    return mid;
+                }
+                // for ascending order
+                if (rows[start] < rows[end]) {
+
+                    if (target > rows[mid]) {
+                        start = mid + 1;
+                    } else {
+                        answer = mid;
+                        end = mid - 1;
+                    }
+                }
+                // for descending order
+                else{
+                    if (target > rows[mid]) {
+                        end = mid - 1;
+
+                    } else {
+                        answer = mid;
+                        start = mid + 1;
+                    }
+                }
+            }
+            return answer;
+        }
+    }
+
+    
 }
