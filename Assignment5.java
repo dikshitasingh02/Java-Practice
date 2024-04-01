@@ -651,7 +651,7 @@ public class Assignment5 {
     }
 
     // Question 7
-    class Solution {
+    class Solution7 {
         public int[] findRightInterval(int[][] matrix) {
             int NumberOfRows = matrix.length;
             int[] rowsFirstElement = new int[ NumberOfRows];
@@ -701,5 +701,24 @@ public class Assignment5 {
         }
     }
 
+    // Question 8
+    class Solution8 {
+        public int reachNumber(int target) {
+            target = Math.abs(target);
+            int sum = 0;
+            int steps = 0;
+            while(sum<target){
+                steps++;
+                sum+=steps;
+            }
+            while((sum-target)%2 != 0){
+                steps++;
+                sum+=steps;
+            }
+            return steps;
+        }
+    }
+
+    // Question 9
     
 }
