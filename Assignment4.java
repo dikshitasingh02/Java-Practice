@@ -1,8 +1,5 @@
-import com.sun.org.apache.xerces.internal.impl.dv.XSFacets;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Assignment4 {
 
@@ -127,11 +124,11 @@ public class Assignment4 {
         }
 
         class Solution9 {
-            public int[] createTargetArray(int[] nums, int[] index) {
+            public Object[] createTargetArray(int[] nums, int[] index) {
                 List<Integer> ans = new ArrayList<>();
                 for (int i = 0; i < nums.length; i++)
                     ans.add(index[i], nums[i]);
-                return ans.stream().mapToInt(Integer::intValue).toArray();
+                return ans.toArray();
             }
         }
 
